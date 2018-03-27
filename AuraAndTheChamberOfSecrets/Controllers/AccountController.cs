@@ -65,7 +65,13 @@ namespace AuraAndTheChamberOfSecrets.Controllers
                 ViewData["ReturnUrl"] = returnUrl;
                 ViewData["LoginProvider"] = info.LoginProvider;
                 var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-                return View("ExternalLogin", new ExternalLoginViewModel { Email = email });
+                var vm = new ExternalLoginViewModel
+                {
+                    Firstname = info.Principal.FindFirstValue(ClaimTypes.GivenName),
+                    Lastname = info.Principal.FindFirstValue(ClaimTypes.Surname),
+                    Username = email.Substring(0, email.IndexOf("@", StringComparison.Ordinal))
+                };
+                return View("ExternalLogin", vm);
             }
         }
 
@@ -82,7 +88,13 @@ namespace AuraAndTheChamberOfSecrets.Controllers
                 {
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser
+                {
+                    Firstname = model.Firstname,
+                    Lastname = model.Lastname,
+                    UserName = model.Username,
+                    Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

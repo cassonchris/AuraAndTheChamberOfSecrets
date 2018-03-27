@@ -11,9 +11,10 @@ using System;
 namespace AuraAndTheChamberOfSecrets.Repo.Migrations
 {
     [DbContext(typeof(AuraAndTheChamberOfSecretsDbContext))]
-    partial class AuraAndTheChamberOfSecretsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180327023236_AddUserFields")]
+    partial class AddUserFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
