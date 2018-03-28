@@ -4,30 +4,45 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aura and the Chamber of Secrets</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+          crossorigin="anonymous">
 </head>
 <body>
 
-<div>
-    @if (User.Identity.IsAuthenticated)
-    {
-        @User.Identity.Name
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 offset-sm-6 col-md-2 offset-md-10">
+            @if (User.Identity.IsAuthenticated)
+            {
+                @User.Identity.Name
 
-        <form asp-controller="Account" asp-action="Logout">
-            <button type="submit" title="Logout">Logout</button>
-        </form>
-    }
-    else
-    {
-        <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
-            <button type="submit" name="provider" value="Google" title="Log in using your Google account">Login with Google</button>
-        </form>
-    }
+                <form asp-controller="Account" asp-action="Logout" class="form">
+                    <button type="submit" class="btn btn-primary" title="Logout">Logout</button>
+                </form>
+            }
+            else
+            {
+                <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form">
+                    <button type="submit" class="btn btn-primary" name="provider" value="Google" title="Log in using your Google account">Login with Google</button>
+                </form>
+            }
+        </div>
+    </div>
 </div>
 
 <div>
     @RenderBody()
 </div>
+    
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
+        crossorigin="anonymous"></script>
 
 @RenderSection("Scripts", required: false)
+
 </body>
 </html>
