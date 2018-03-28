@@ -1,0 +1,37 @@
+﻿@model AuraAndTheChamberOfSecrets.ViewModels.ExternalLoginViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h2>@ViewData["Title"]</h2>
+<h4>Associate your @ViewData["LoginProvider"] account.</h4>
+<hr />
+
+<p>
+    You've successfully authenticated with <strong>@ViewData["LoginProvider"]</strong>.
+    Please confirm your name and select a username.
+</p>
+
+<div>
+    <div>
+        <form asp-action="ExternalLoginConfirmation" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+            <div asp-validation-summary="All"></div>
+            <div>
+                <label asp-for="Username"></label>
+                <input asp-for="Username" />
+                <span asp-validation-for="Username"></span>
+            </div>
+            <div>
+                <label asp-for="Firstname"></label>
+                <input asp-for="Firstname" />
+                <span asp-validation-for="Firstname"></span>
+            </div>
+            <div>
+                <label asp-for="Lastname"></label>
+                <input asp-for="Lastname" />
+                <span asp-validation-for="Lastname"></span>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</div>

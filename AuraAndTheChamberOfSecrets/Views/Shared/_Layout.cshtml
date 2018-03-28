@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aura and the Chamber of Secrets</title>
+</head>
+<body>
+
+<div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        @User.Identity.Name
+
+        <form asp-controller="Account" asp-action="Logout">
+            <button type="submit" title="Logout">Logout</button>
+        </form>
+    }
+    else
+    {
+        <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+            <button type="submit" name="provider" value="Google" title="Log in using your Google account">Login with Google</button>
+        </form>
+    }
+</div>
+
+<div>
+    @RenderBody()
+</div>
+
+@RenderSection("Scripts", required: false)
+</body>
+</html>
