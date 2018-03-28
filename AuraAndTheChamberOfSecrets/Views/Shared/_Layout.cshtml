@@ -5,42 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aura and the Chamber of Secrets</title>
 
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
-          rel="stylesheet" 
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
 </head>
 <body>
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-6 offset-sm-6 col-md-2 offset-md-10">
+    <div class="container">
+        <div class="row">
             @if (User.Identity.IsAuthenticated)
             {
-                @User.Identity.Name
+                <div class="col-sm-6 col-md-2 offset-md-8 text-right">
+                    Hello @User.Identity.Name
+                </div>
 
-                <form asp-controller="Account" asp-action="Logout" class="form">
-                    <button type="submit" class="btn btn-primary" title="Logout">Logout</button>
-                </form>
+                <div class="col-sm-6 col-md-2">
+                    <form asp-controller="Account" asp-action="Logout" class="form">
+                        <button type="submit" class="btn btn-primary" title="Logout">Logout</button>
+                    </form>
+                </div>
             }
             else
             {
-                <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form">
-                    <button type="submit" class="btn btn-primary" name="provider" value="Google" title="Log in using your Google account">Login with Google</button>
-                </form>
+
+                <div class="col-sm-12 col-md-2 offset-md-10">
+                    <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form">
+                        <button type="submit" class="btn btn-primary" name="provider" value="Google" title="Log in using your Google account">Login with Google</button>
+                    </form>
+                </div>
             }
         </div>
     </div>
-</div>
 
-@RenderBody()
+    @RenderBody()
 
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
-        crossorigin="anonymous"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
 
-@RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
 
 </body>
 </html>
