@@ -1,0 +1,36 @@
+﻿@model AuraAndTheChamberOfSecrets.ViewModels.Question.SearchViewModel
+
+@{
+    ViewData["Title"] = "Search Results";
+}
+
+<div class="row">
+    <div class="col-sm-12 text-center">
+        <h2>Search Questions</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-8 offset-sm-2">
+        <form asp-action="Search" method="post" class="form">
+            <div class="input-group">
+                <input asp-for="SearchString" class="form-control"/>
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+            <span asp-validation-for="SearchString"></span>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        @if (Model.SearchResults?.Any() == true)
+        {
+            foreach (var searchResult in Model.SearchResults)
+            {
+                <span>@searchResult.QuestionText</span>
+            }
+        }
+    </div>
+</div>

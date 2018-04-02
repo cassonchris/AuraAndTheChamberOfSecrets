@@ -1,5 +1,7 @@
 ﻿using AuraAndTheChamberOfSecrets.Models.User;
-using AuraAndTheChamberOfSecrets.Repo.Context;
+using AuraAndTheChamberOfSecrets.Repo.Config;
+using AuraAndTheChamberOfSecrets.Repo.EntityFramework.Context;
+using AuraAndTheChamberOfSecrets.Services.Config;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -42,6 +44,9 @@ namespace AuraAndTheChamberOfSecrets
                 });
 
             services.AddMvc();
+
+            services.AddAuraAndTheChamberOfSecretsEntityFrameworkRepositories();
+            services.AddAuraAndTheChamberOfSecretsServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
