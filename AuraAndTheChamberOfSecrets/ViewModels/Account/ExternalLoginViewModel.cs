@@ -1,4 +1,4 @@
-namespace AuraAndTheChamberOfSecrets.ViewModels
+namespace AuraAndTheChamberOfSecrets.ViewModels.Account
 {
     public class ExternalLoginViewModel
     {

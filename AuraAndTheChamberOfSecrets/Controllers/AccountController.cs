@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AuraAndTheChamberOfSecrets.Models.User;
-using AuraAndTheChamberOfSecrets.ViewModels;
+using AuraAndTheChamberOfSecrets.ViewModels.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

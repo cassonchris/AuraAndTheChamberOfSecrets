@@ -3,7 +3,7 @@ using AuraAndTheChamberOfSecrets.Models.User;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace AuraAndTheChamberOfSecrets.Repo.Context
+namespace AuraAndTheChamberOfSecrets.Repo.EntityFramework.Context
 {
     public class AuraAndTheChamberOfSecretsDbContext : IdentityDbContext<ApplicationUser>
     {
