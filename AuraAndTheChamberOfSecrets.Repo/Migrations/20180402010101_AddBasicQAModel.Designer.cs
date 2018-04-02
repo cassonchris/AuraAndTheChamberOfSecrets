@@ -11,9 +11,10 @@ using System;
 namespace AuraAndTheChamberOfSecrets.Repo.Migrations
 {
     [DbContext(typeof(AuraAndTheChamberOfSecretsDbContext))]
-    partial class AuraAndTheChamberOfSecretsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180402010101_AddBasicQAModel")]
+    partial class AddBasicQAModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
