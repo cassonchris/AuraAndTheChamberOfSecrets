@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 
-namespace AuraAndTheChamberOfSecrets.Repo.Migrations
+namespace AuraAndTheChamberOfSecrets.Repo.EntityFramework.Migrations
 {
     public partial class AddUserFields : Migration
     {

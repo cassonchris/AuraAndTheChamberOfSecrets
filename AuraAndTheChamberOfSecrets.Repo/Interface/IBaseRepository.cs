@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace AuraAndTheChamberOfSecrets.Repo
+namespace AuraAndTheChamberOfSecrets.Repo.Interface
 {
     public interface IBaseRepository<T> where T : class
     {
