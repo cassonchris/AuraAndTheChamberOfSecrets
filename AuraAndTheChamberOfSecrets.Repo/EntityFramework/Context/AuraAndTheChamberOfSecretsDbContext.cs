@@ -1,11 +1,12 @@
-﻿using AuraAndTheChamberOfSecrets.Models;
+﻿using System;
+using AuraAndTheChamberOfSecrets.Models;
 using AuraAndTheChamberOfSecrets.Models.User;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AuraAndTheChamberOfSecrets.Repo.EntityFramework.Context
 {
-    public class AuraAndTheChamberOfSecretsDbContext : IdentityDbContext<ApplicationUser>
+    public class AuraAndTheChamberOfSecretsDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
         public AuraAndTheChamberOfSecretsDbContext(DbContextOptions<AuraAndTheChamberOfSecretsDbContext> options)
             : base(options)

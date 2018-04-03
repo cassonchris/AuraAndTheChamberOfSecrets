@@ -32,7 +32,7 @@ namespace AuraAndTheChamberOfSecrets
             services.AddDbContext<AuraAndTheChamberOfSecretsDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("AuraAndTheChamberOfSecretsConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<AuraAndTheChamberOfSecretsDbContext>()
                 .AddDefaultTokenProviders();
 
