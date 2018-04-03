@@ -1,13 +1,9 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace AuraAndTheChamberOfSecrets.Models
 {
-    public class Answer
+    public class Answer : BaseModel
     {
-        [Key]
-        public Guid Id { get; set; }
-
         [Required]
         public string AnswerText { get; set; }
 

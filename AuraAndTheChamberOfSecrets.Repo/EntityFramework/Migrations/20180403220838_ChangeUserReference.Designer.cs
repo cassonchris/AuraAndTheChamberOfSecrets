@@ -11,8 +11,8 @@ using System;
 namespace AuraAndTheChamberOfSecrets.Repo.EntityFramework.Migrations
 {
     [DbContext(typeof(AuraAndTheChamberOfSecretsDbContext))]
-    [Migration("20180403145533_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20180403220838_ChangeUserReference")]
+    partial class ChangeUserReference
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,9 @@ namespace AuraAndTheChamberOfSecrets.Repo.EntityFramework.Migrations
                     b.Property<Guid?>("OrganizationId");
 
                     b.Property<string>("QuestionText")
+                        .IsRequired();
+
+                    b.Property<string>("Username")
                         .IsRequired();
 
                     b.HasKey("Id");

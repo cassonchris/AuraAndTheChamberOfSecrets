@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AuraAndTheChamberOfSecrets.Models.User
 {
-    public class Organization
+    public class Organization : BaseModel
     {
-        [Key]
-        public Guid Id { get; set; }
-
         [Required]
         public string Name { get; set; }
 

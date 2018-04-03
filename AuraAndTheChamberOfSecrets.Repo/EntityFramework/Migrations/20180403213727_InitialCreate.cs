@@ -197,7 +197,8 @@ namespace AuraAndTheChamberOfSecrets.Repo.EntityFramework.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     OrganizationId = table.Column<Guid>(nullable: true),
-                    QuestionText = table.Column<string>(nullable: false)
+                    QuestionText = table.Column<string>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -208,6 +209,12 @@ namespace AuraAndTheChamberOfSecrets.Repo.EntityFramework.Migrations
                         principalTable: "Organizations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Questions_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -282,6 +289,11 @@ namespace AuraAndTheChamberOfSecrets.Repo.EntityFramework.Migrations
                 name: "IX_Questions_OrganizationId",
                 table: "Questions",
                 column: "OrganizationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Questions_UserId",
+                table: "Questions",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -314,10 +326,10 @@ namespace AuraAndTheChamberOfSecrets.Repo.EntityFramework.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Organizations");
 
             migrationBuilder.DropTable(
-                name: "Organizations");
+                name: "AspNetUsers");
         }
     }
 }
