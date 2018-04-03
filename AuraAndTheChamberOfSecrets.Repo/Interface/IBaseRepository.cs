@@ -9,6 +9,7 @@ namespace AuraAndTheChamberOfSecrets.Repo.Interface
     {
         T GetSingleById(Guid id);
         IQueryable<T> Query(Expression<Func<T, bool>> query);
+        Task AddAsync(T t);
         Task SaveAsync();
     }
 }
