@@ -50,6 +50,7 @@ namespace AuraAndTheChamberOfSecrets.Controllers
 
             var question = new Question
             {
+                Title = vm.Title,
                 QuestionText = vm.QuestionText,
                 Username = User.Identity.Name
             };
