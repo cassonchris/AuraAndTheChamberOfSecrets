@@ -12,30 +12,61 @@
 </head>
 <body>
 
-    <div class="container">
-        <div class="row">
+    <div class="container mb-4">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top justify-content-between">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">Chamber of Secrets</a>
+
+
+
             @if (User.Identity.IsAuthenticated)
             {
-                <div class="col-sm-6 col-md-2 offset-md-8 text-right">
-                    Hello @User.Identity.Name
-                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                <div class="col-sm-6 col-md-2">
-                    <form asp-controller="Account" asp-action="Logout" class="form">
-                        <button type="submit" class="btn btn-primary" title="Logout">Logout</button>
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Question" asp-action="Ask">Ask Question</a>
+                        </li>
+                    </ul>
+                    <form asp-controller="Question" asp-action="Search" method="post" class="form form-inline mx-auto">
+                        <div class="input-group">
+                            <input type="text" name="SearchString" class="form-control" />
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+                        </div>
                     </form>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUser" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @User.Identity.Name
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownUser">
+                                <form asp-controller="Account" asp-action="Logout" class="form">
+                                    <button type="submit" class="dropdown-item btn btn-primary" title="Logout">Logout</button>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             }
             else
             {
-
-                <div class="col-sm-12 col-md-2 offset-md-10">
-                    <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form">
-                        <button type="submit" class="btn btn-primary" name="provider" value="Google" title="Log in using your Google account">Login with Google</button>
-                    </form>
-                </div>
+                <form asp-controller="Question" asp-action="Search" method="post" class="form form-inline mx-auto">
+                    <div class="input-group">
+                        <input type="text" name="SearchString" class="form-control" />
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+                </form>
+                <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form form-inline">
+                    <button type="submit" class="btn btn-primary" name="provider" value="Google" title="Log in using your Google account">Login with Google</button>
+                </form>
             }
-        </div>
+        </nav>
     </div>
 
     @RenderBody()
