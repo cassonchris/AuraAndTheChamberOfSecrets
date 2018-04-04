@@ -8,6 +8,7 @@ namespace AuraAndTheChamberOfSecrets.Services.Config
         public static void AddAuraAndTheChamberOfSecretsServices(this IServiceCollection services)
         {
             services.AddScoped<IQuestionService, QuestionService>();
+            services.AddScoped<IAccountService, AccountService>();
         }
     }
 }

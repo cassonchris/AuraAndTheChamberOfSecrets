@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AuraAndTheChamberOfSecrets.Models.User;
+using AuraAndTheChamberOfSecrets.Services.Interface;
 using AuraAndTheChamberOfSecrets.ViewModels.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,13 +16,16 @@ namespace AuraAndTheChamberOfSecrets.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IAccountService _accountService;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IAccountService accountService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _accountService = accountService;
         }
 
         [HttpPost]
@@ -88,20 +92,25 @@ namespace AuraAndTheChamberOfSecrets.Controllers
                 {
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
-                var user = new ApplicationUser
+                var applicationUser = new ApplicationUser
                 {
-                    Firstname = model.Firstname,
-                    Lastname = model.Lastname,
                     UserName = model.Username,
                     Email = info.Principal.FindFirstValue(ClaimTypes.Email)
                 };
-                var result = await _userManager.CreateAsync(user);
+                var userProfile = new UserProfile
+                {
+                    Username = model.Username,
+                    Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                    Firstname = model.Firstname,
+                    Lastname = model.Lastname
+                };
+                var result = await _accountService.CreateUserAsync(applicationUser, userProfile);
                 if (result.Succeeded)
                 {
-                    result = await _userManager.AddLoginAsync(user, info);
+                    result = await _userManager.AddLoginAsync(applicationUser, info);
                     if (result.Succeeded)
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        await _signInManager.SignInAsync(applicationUser, isPersistent: false);
                         return RedirectToLocal(returnUrl);
                     }
                 }

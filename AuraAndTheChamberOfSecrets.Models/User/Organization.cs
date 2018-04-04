@@ -8,6 +8,6 @@ namespace AuraAndTheChamberOfSecrets.Models.User
         [Required]
         public string Name { get; set; }
 
-        public IList<ApplicationUserOrganization> UserLinks { get; set; }
+        public IList<UserOrganization> UserLinks { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace AuraAndTheChamberOfSecrets.Repo.Config
         public static void AddAuraAndTheChamberOfSecretsEntityFrameworkRepositories(this IServiceCollection services)
         {
             services.AddScoped<IQuestionRepository, QuestionRepository>();
+            services.AddScoped<IUserProfileRepository, UserProfileRepository>();
         }
     }
 }

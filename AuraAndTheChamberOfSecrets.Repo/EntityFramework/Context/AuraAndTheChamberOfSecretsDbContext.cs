@@ -13,7 +13,8 @@ namespace AuraAndTheChamberOfSecrets.Repo.EntityFramework.Context
         {
         }
 
-        public DbSet<ApplicationUserOrganization> ApplicationUserOrganizations { get; set; }
+        public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<UserOrganization> UserOrganizations { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
@@ -22,15 +23,15 @@ namespace AuraAndTheChamberOfSecrets.Repo.EntityFramework.Context
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<ApplicationUserOrganization>()
-                .HasKey(auo => new { auo.ApplicationUserId, auo.OrganizationId });
+            builder.Entity<UserOrganization>()
+                .HasKey(auo => new { UserId = auo.UserProfileId, auo.OrganizationId });
 
-            builder.Entity<ApplicationUserOrganization>()
-                .HasOne(auo => auo.ApplicationUser)
+            builder.Entity<UserOrganization>()
+                .HasOne(auo => auo.UserProfile)
                 .WithMany(u => u.OrganizationLinks)
-                .HasForeignKey(auo => auo.ApplicationUserId);
+                .HasForeignKey(auo => auo.UserProfileId);
 
-            builder.Entity<ApplicationUserOrganization>()
+            builder.Entity<UserOrganization>()
                 .HasOne(auo => auo.Organization)
                 .WithMany(o => o.UserLinks)
                 .HasForeignKey(auo => auo.OrganizationId);
