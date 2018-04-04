@@ -37,14 +37,7 @@ namespace AuraAndTheChamberOfSecrets.Controllers
         [HttpGet]
         public IActionResult Ask()
         {
-            var vm = new AskViewModel
-            {
-                Question = new Question
-                {
-                    Username = User.Identity.Name
-                }
-            };
-            return View(vm);
+            return View();
         }
 
         [HttpPost]
@@ -55,8 +48,12 @@ namespace AuraAndTheChamberOfSecrets.Controllers
                 return View(vm);
             }
 
-            vm.Question.Username = User.Identity.Name;
-            await _questionService.CreateQuestionAsync(vm.Question);
+            var question = new Question
+            {
+                QuestionText = vm.QuestionText,
+                Username = User.Identity.Name
+            };
+            await _questionService.CreateQuestionAsync(question);
 
             return RedirectToAction(nameof(Search));
         }

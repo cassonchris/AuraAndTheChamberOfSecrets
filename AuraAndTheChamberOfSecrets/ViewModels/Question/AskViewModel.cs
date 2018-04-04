@@ -4,7 +4,8 @@ namespace AuraAndTheChamberOfSecrets.ViewModels.Question
 {
     public class AskViewModel
     {
-        [Required]
-        public Models.Question Question { get; set; }
+        [Required(ErrorMessage = "A question is required.")]
+        [Display(Name = "Question")]
+        public string QuestionText { get; set; }
     }
 }
