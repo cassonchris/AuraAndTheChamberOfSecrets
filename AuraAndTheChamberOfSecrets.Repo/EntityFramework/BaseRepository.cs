@@ -30,6 +30,11 @@ namespace AuraAndTheChamberOfSecrets.Repo.EntityFramework
             return _dbSet.Where(query);
         }
 
+        public async Task AddAsync(T t)
+        {
+            await _dbSet.AddAsync(t);
+        }
+
         public virtual async Task SaveAsync()
         {
             await _context.SaveChangesAsync();
