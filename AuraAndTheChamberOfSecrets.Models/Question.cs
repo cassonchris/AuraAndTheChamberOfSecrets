@@ -7,6 +7,9 @@ namespace AuraAndTheChamberOfSecrets.Models
     public class Question : BaseModel
     {
         [Required]
+        public string Title { get; set; }
+
+        [Required]
         public string QuestionText { get; set; }
 
         [Required]
