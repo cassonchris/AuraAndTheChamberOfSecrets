@@ -61,7 +61,7 @@ namespace AuraAndTheChamberOfSecrets.Controllers
             };
             await _questionService.CreateQuestionAsync(question);
 
-            return RedirectToAction(nameof(Search));
+            return RedirectToAction(nameof(Detail), new {question.Id});
         }
 
         [HttpGet]
