@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using AuraAndTheChamberOfSecrets.Models.User;
 using AuraAndTheChamberOfSecrets.Repo.Interface;
 using AuraAndTheChamberOfSecrets.Services.Interface;
@@ -27,6 +28,11 @@ namespace AuraAndTheChamberOfSecrets.Services
                 await _userProfileRepo.SaveAsync();
             }
             return result;
+        }
+
+        public UserProfile GetUserProfileByUsername(string username)
+        {
+            return _userProfileRepo.Query(u => u.Username == username).SingleOrDefault();
         }
     }
 }

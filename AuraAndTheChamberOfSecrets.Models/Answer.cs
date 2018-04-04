@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using AuraAndTheChamberOfSecrets.Models.User;
 
 namespace AuraAndTheChamberOfSecrets.Models
 {
@@ -9,5 +10,8 @@ namespace AuraAndTheChamberOfSecrets.Models
 
         [Required]
         public Question Question { get; set; }
+
+        [Required]
+        public UserProfile User { get; set; }
     }
 }

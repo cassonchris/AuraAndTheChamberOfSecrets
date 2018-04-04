@@ -35,6 +35,16 @@ namespace AuraAndTheChamberOfSecrets.Repo.EntityFramework.Context
                 .HasOne(auo => auo.Organization)
                 .WithMany(o => o.UserLinks)
                 .HasForeignKey(auo => auo.OrganizationId);
+
+            builder.Entity<Question>()
+                .HasOne(q => q.User)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Answer>()
+                .HasOne(a => a.User)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
