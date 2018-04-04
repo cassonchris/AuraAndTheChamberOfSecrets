@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AuraAndTheChamberOfSecrets.Models;
 using AuraAndTheChamberOfSecrets.Services.Interface;
 using AuraAndTheChamberOfSecrets.ViewModels.Question;
@@ -60,7 +61,39 @@ namespace AuraAndTheChamberOfSecrets.Controllers
             };
             await _questionService.CreateQuestionAsync(question);
 
-            return RedirectToAction(nameof(Search));
+            return RedirectToAction(nameof(Detail), new {question.Id});
+        }
+
+        [HttpGet]
+        [Route("[controller]/{id:Guid}/[action]")]
+        public IActionResult Detail(Guid id)
+        {
+            var question = _questionService.GetQuestion(id);
+
+            var vm = new DetailViewModel {Question = question};
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        [Route("[controller]/{id:Guid}/[action]")]
+        public async Task<IActionResult> Detail(DetailViewModel vm, Guid id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(vm);
+            }
+
+            var user = _accountService.GetUserProfileByUsername(User.Identity.Name);
+
+            var answer = new Answer
+            {
+                AnswerText = vm.NewAnswer,
+                User = user
+            };
+            await _questionService.AddAnswerAsync(answer, id);
+
+            return RedirectToAction(nameof(Detail), new {id});
         }
     }
 }

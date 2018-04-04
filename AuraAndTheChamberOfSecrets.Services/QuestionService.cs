@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AuraAndTheChamberOfSecrets.Models;
 using AuraAndTheChamberOfSecrets.Repo.Interface;
@@ -23,6 +24,19 @@ namespace AuraAndTheChamberOfSecrets.Services
         public async Task CreateQuestionAsync(Question question)
         {
             await _questionRepo.AddAsync(question);
+            await _questionRepo.SaveAsync();
+        }
+
+        public Question GetQuestion(Guid id)
+        {
+            return _questionRepo.GetSingleById(id);
+        }
+
+        public async Task AddAnswerAsync(Answer answer, Guid questionId)
+        {
+            var question = GetQuestion(questionId);
+            answer.Question = question;
+            question.Answers.Add(answer);
             await _questionRepo.SaveAsync();
         }
     }
