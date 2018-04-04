@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AuraAndTheChamberOfSecrets.Models;
 using AuraAndTheChamberOfSecrets.Services.Interface;
 using AuraAndTheChamberOfSecrets.ViewModels.Question;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuraAndTheChamberOfSecrets.Controllers
@@ -19,12 +20,14 @@ namespace AuraAndTheChamberOfSecrets.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Search()
         {
             return View(new SearchViewModel());
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult Search(SearchViewModel search)
         {
             if (!ModelState.IsValid)
@@ -64,6 +67,11 @@ namespace AuraAndTheChamberOfSecrets.Controllers
             return RedirectToAction(nameof(Detail), new {question.Id});
         }
 
+        /// <summary>
+        /// todo - restrict access to users who are part of the organization this question belongs to
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("[controller]/{id:Guid}/[action]")]
         public IActionResult Detail(Guid id)

@@ -2,9 +2,11 @@
 using AuraAndTheChamberOfSecrets.Repo.Config;
 using AuraAndTheChamberOfSecrets.Repo.EntityFramework.Context;
 using AuraAndTheChamberOfSecrets.Services.Config;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,7 +45,18 @@ namespace AuraAndTheChamberOfSecrets
                     googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
                 });
 
-            services.AddMvc();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Home/Index";
+                options.LogoutPath = "/Account/Logout";
+                options.AccessDeniedPath = "/Account/AccessDenied";
+            });
+
+            var authPolicy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
+
+            services.AddMvc(opt => { opt.Filters.Add(new AuthorizeFilter(authPolicy)); });
 
             services.AddAuraAndTheChamberOfSecretsEntityFrameworkRepositories();
             services.AddAuraAndTheChamberOfSecretsServices();
