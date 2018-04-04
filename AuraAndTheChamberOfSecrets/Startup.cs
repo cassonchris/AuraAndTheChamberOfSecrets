@@ -1,7 +1,9 @@
-﻿using AuraAndTheChamberOfSecrets.Models.User;
+﻿using System.Threading.Tasks;
+using AuraAndTheChamberOfSecrets.Models.User;
 using AuraAndTheChamberOfSecrets.Repo.Config;
 using AuraAndTheChamberOfSecrets.Repo.EntityFramework.Context;
 using AuraAndTheChamberOfSecrets.Services.Config;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -50,6 +52,23 @@ namespace AuraAndTheChamberOfSecrets
                 options.LoginPath = "/Home/Index";
                 options.LogoutPath = "/Account/Logout";
                 options.AccessDeniedPath = "/Account/AccessDenied";
+                options.Events = new CookieAuthenticationEvents
+                {
+                    OnRedirectToLogin = async ctx =>
+                    {
+                        if (ctx.Request.Path.StartsWithSegments("/api")
+                            && ctx.Response.StatusCode == 200)
+                        {
+                            ctx.Response.StatusCode = 401;
+                        }
+                        else
+                        {
+                            ctx.Response.Redirect(ctx.RedirectUri);
+                        }
+
+                        await Task.Yield();
+                    }
+                };
             });
 
             var authPolicy = new AuthorizationPolicyBuilder()
@@ -69,7 +88,7 @@ namespace AuraAndTheChamberOfSecrets
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app.UseAuthentication();
 
             app.UseMvc(routes =>
