@@ -143,6 +143,8 @@ namespace AuraAndTheChamberOfSecrets.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
+        // todo - add profile page
+
         #region Helpers
 
         private void AddErrors(IdentityResult result)

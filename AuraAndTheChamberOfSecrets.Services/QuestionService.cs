@@ -16,6 +16,11 @@ namespace AuraAndTheChamberOfSecrets.Services
             _questionRepo = questionRepo;
         }
 
+        /// <summary>
+        /// todo - add elastic search
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <returns></returns>
         public IQueryable<Question> SearchQuestions(string searchString)
         {
             return _questionRepo.Query(q => q.QuestionText.Contains(searchString));
