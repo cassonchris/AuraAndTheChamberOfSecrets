@@ -9,10 +9,12 @@ namespace AuraAndTheChamberOfSecrets.Controllers
     public class QuestionController : Controller
     {
         private readonly IQuestionService _questionService;
+        private readonly IAccountService _accountService;
 
-        public QuestionController(IQuestionService questionService)
+        public QuestionController(IQuestionService questionService, IAccountService accountService)
         {
             _questionService = questionService;
+            _accountService = accountService;
         }
 
         [HttpGet]
@@ -48,11 +50,13 @@ namespace AuraAndTheChamberOfSecrets.Controllers
                 return View(vm);
             }
 
+            var user = _accountService.GetUserProfileByUsername(User.Identity.Name);
+
             var question = new Question
             {
                 Title = vm.Title,
                 QuestionText = vm.QuestionText,
-                Username = User.Identity.Name
+                User = user
             };
             await _questionService.CreateQuestionAsync(question);
 

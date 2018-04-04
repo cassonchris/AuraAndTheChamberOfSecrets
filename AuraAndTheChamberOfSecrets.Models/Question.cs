@@ -13,7 +13,7 @@ namespace AuraAndTheChamberOfSecrets.Models
         public string QuestionText { get; set; }
 
         [Required]
-        public string Username { get; set; }
+        public UserProfile User { get; set; }
 
         public Organization Organization { get; set; }
 

@@ -11,9 +11,10 @@ using System;
 namespace AuraAndTheChamberOfSecrets.Repo.EntityFramework.Migrations
 {
     [DbContext(typeof(AuraAndTheChamberOfSecretsDbContext))]
-    partial class AuraAndTheChamberOfSecretsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180404133542_SplitUser")]
+    partial class SplitUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,13 +31,9 @@ namespace AuraAndTheChamberOfSecrets.Repo.EntityFramework.Migrations
 
                     b.Property<Guid>("QuestionId");
 
-                    b.Property<Guid>("UserId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("QuestionId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Answers");
                 });
@@ -54,13 +51,12 @@ namespace AuraAndTheChamberOfSecrets.Repo.EntityFramework.Migrations
                     b.Property<string>("Title")
                         .IsRequired();
 
-                    b.Property<Guid>("UserId");
+                    b.Property<string>("Username")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
                     b.HasIndex("OrganizationId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Questions");
                 });
@@ -276,11 +272,6 @@ namespace AuraAndTheChamberOfSecrets.Repo.EntityFramework.Migrations
                         .WithMany("Answers")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("AuraAndTheChamberOfSecrets.Models.User.UserProfile", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("AuraAndTheChamberOfSecrets.Models.Question", b =>
@@ -288,11 +279,6 @@ namespace AuraAndTheChamberOfSecrets.Repo.EntityFramework.Migrations
                     b.HasOne("AuraAndTheChamberOfSecrets.Models.User.Organization", "Organization")
                         .WithMany()
                         .HasForeignKey("OrganizationId");
-
-                    b.HasOne("AuraAndTheChamberOfSecrets.Models.User.UserProfile", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("AuraAndTheChamberOfSecrets.Models.User.UserOrganization", b =>

@@ -2,10 +2,10 @@
 
 namespace AuraAndTheChamberOfSecrets.Models.User
 {
-    public class ApplicationUserOrganization
+    public class UserOrganization
     {
-        public Guid ApplicationUserId { get; set; }
-        public ApplicationUser ApplicationUser { get; set; }
+        public Guid UserProfileId { get; set; }
+        public UserProfile UserProfile { get; set; }
         public Guid OrganizationId { get; set; }
         public Organization Organization { get; set; }
     }
