@@ -12,6 +12,8 @@
             <p>@Model.Question.User.Username</p>
         </div>
     </div>
+    <hr/>
+    <h4>Answers</h4>
     @foreach (var answer in Model.Question.Answers)
     {
         <div class="row">
@@ -21,4 +23,17 @@
         </div>
         </div>
     }
+    <hr/>
+    <div class="row">
+        <div class="col-sm-12">
+            <form asp-action="Detail" method="post" class="form">
+                <div class="form-group">
+                    <label asp-for="NewAnswer"></label>
+                    <textarea asp-for="NewAnswer" class="form-control"></textarea>
+                    <span asp-validation-for="NewAnswer" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Answer</button>
+            </form>
+        </div>
+    </div>
 </div>

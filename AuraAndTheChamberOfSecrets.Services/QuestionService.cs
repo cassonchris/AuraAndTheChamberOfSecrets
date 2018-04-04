@@ -31,5 +31,13 @@ namespace AuraAndTheChamberOfSecrets.Services
         {
             return _questionRepo.GetSingleById(id);
         }
+
+        public async Task AddAnswerAsync(Answer answer, Guid questionId)
+        {
+            var question = GetQuestion(questionId);
+            answer.Question = question;
+            question.Answers.Add(answer);
+            await _questionRepo.SaveAsync();
+        }
     }
 }

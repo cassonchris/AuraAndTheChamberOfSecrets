@@ -74,5 +74,26 @@ namespace AuraAndTheChamberOfSecrets.Controllers
 
             return View(vm);
         }
+
+        [HttpPost]
+        [Route("[controller]/{id:Guid}/[action]")]
+        public async Task<IActionResult> Detail(DetailViewModel vm, Guid id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(vm);
+            }
+
+            var user = _accountService.GetUserProfileByUsername(User.Identity.Name);
+
+            var answer = new Answer
+            {
+                AnswerText = vm.NewAnswer,
+                User = user
+            };
+            await _questionService.AddAnswerAsync(answer, id);
+
+            return RedirectToAction(nameof(Detail), new {id});
+        }
     }
 }

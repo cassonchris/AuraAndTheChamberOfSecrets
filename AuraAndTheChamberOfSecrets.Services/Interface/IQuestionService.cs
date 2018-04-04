@@ -10,5 +10,6 @@ namespace AuraAndTheChamberOfSecrets.Services.Interface
         IQueryable<Question> SearchQuestions(string searchString);
         Task CreateQuestionAsync(Question question);
         Question GetQuestion(Guid id);
+        Task AddAnswerAsync(Answer answer, Guid questionId);
     }
 }
