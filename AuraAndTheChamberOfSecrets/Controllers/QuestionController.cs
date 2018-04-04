@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AuraAndTheChamberOfSecrets.Models;
 using AuraAndTheChamberOfSecrets.Services.Interface;
 using AuraAndTheChamberOfSecrets.ViewModels.Question;
@@ -61,6 +62,17 @@ namespace AuraAndTheChamberOfSecrets.Controllers
             await _questionService.CreateQuestionAsync(question);
 
             return RedirectToAction(nameof(Search));
+        }
+
+        [HttpGet]
+        [Route("[controller]/{id:Guid}/[action]")]
+        public IActionResult Detail(Guid id)
+        {
+            var question = _questionService.GetQuestion(id);
+
+            var vm = new DetailViewModel {Question = question};
+
+            return View(vm);
         }
     }
 }

@@ -1,0 +1,24 @@
+﻿@model AuraAndTheChamberOfSecrets.ViewModels.Question.DetailViewModel
+
+@{
+    ViewData["Title"] = "Question Detail";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h5>@Model.Question.Title</h5>
+            <p>@Model.Question.QuestionText</p>
+            <p>@Model.Question.User.Username</p>
+        </div>
+    </div>
+    @foreach (var answer in Model.Question.Answers)
+    {
+        <div class="row">
+        <div class="col-sm-12">
+            <p>@answer.AnswerText</p>
+            <p>@answer.User.Username</p>
+        </div>
+        </div>
+    }
+</div>

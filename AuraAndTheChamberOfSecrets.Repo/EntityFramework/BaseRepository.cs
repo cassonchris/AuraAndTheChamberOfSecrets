@@ -10,34 +10,33 @@ namespace AuraAndTheChamberOfSecrets.Repo.EntityFramework
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
-        private readonly AuraAndTheChamberOfSecretsDbContext _context;
-        private readonly DbSet<T> _dbSet;
+        protected AuraAndTheChamberOfSecretsDbContext Context { get; }
+        protected DbSet<T> DbSet { get; }
 
         public BaseRepository(AuraAndTheChamberOfSecretsDbContext context)
         {
-            _context = context;
-            _dbSet = _context.Set<T>();
+            Context = context;
+            DbSet = context.Set<T>();
         }
-
 
         public virtual T GetSingleById(Guid id)
         {
-            return _dbSet.Find(id);
+            return DbSet.Find(id);
         }
 
         public virtual IQueryable<T> Query(Expression<Func<T, bool>> query)
         {
-            return _dbSet.Where(query);
+            return DbSet.Where(query);
         }
 
         public async Task AddAsync(T t)
         {
-            await _dbSet.AddAsync(t);
+            await DbSet.AddAsync(t);
         }
 
         public virtual async Task SaveAsync()
         {
-            await _context.SaveChangesAsync();
+            await Context.SaveChangesAsync();
         }
     }
 }

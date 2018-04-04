@@ -11,7 +11,9 @@
             {
                 foreach (var searchResult in Model.SearchResults)
                 {
-                    <h5>@searchResult.Title</h5>
+                    <h5>
+                        <a asp-controller="Question" asp-action="Detail" asp-route-id="@searchResult.Id">@searchResult.Title</a>
+                    </h5>
                     <p>@searchResult.QuestionText</p>
                 }
             }
