@@ -11,5 +11,6 @@ namespace AuraAndTheChamberOfSecrets.Services.Interface
         Task CreateQuestionAsync(Question question);
         Question GetQuestion(Guid id);
         Task AddAnswerAsync(Answer answer, Guid questionId);
+        IQueryable<Question> GetQuestionsForUser(Guid userGuid);
     }
 }

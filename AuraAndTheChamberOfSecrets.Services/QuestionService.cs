@@ -53,5 +53,10 @@ namespace AuraAndTheChamberOfSecrets.Services
 
             await _questionRepo.SaveAsync();
         }
+
+        public IQueryable<Question> GetQuestionsForUser(Guid userGuid)
+        {
+            return _questionRepo.Query(q => q.User.Id == userGuid);
+        }
     }
 }

@@ -17,15 +17,18 @@ namespace AuraAndTheChamberOfSecrets.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IAccountService _accountService;
+        private readonly IQuestionService _questionService;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IAccountService accountService)
+            IAccountService accountService,
+            IQuestionService questionService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _accountService = accountService;
+            _questionService = questionService;
         }
 
         [HttpPost]
@@ -143,7 +146,19 @@ namespace AuraAndTheChamberOfSecrets.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
-        // todo - add profile page
+        [HttpGet]
+        public IActionResult Profile()
+        {
+            var user = _accountService.GetUserProfileByUsername(User.Identity.Name);
+            var questions = _questionService.GetQuestionsForUser(user.Id);
+
+            var vm = new ProfileViewModel
+            {
+                UserProfile = user,
+                UserQuestions = questions
+            };
+            return View(vm);
+        }
 
         #region Helpers
 

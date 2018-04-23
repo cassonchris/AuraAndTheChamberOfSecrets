@@ -1,0 +1,62 @@
+﻿@model AuraAndTheChamberOfSecrets.ViewModels.Account.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="nav flex-column nav-pills nav-stacked" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" id="nav-user-info-tab" data-toggle="pill" href="#nav-user-info" role="tab" aria-controls="nav-user-info">User Info</a>
+                <a class="nav-link" id="nav-org-tab" data-toggle="pill" href="#nav-org" role="tab" aria-controls="nav-org">Organizations</a>
+                <a class="nav-link" id="nav-questions-tab" data-toggle="pill" href="#nav-questions" role="tab" aria-controls="nav-questions">Questions</a>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="nav-user-info" role="tabpanel" aria-labelledby="nav-user-info-tab">
+                    <div class="form-group">
+                        <label asp-for="UserProfile.Firstname"></label>
+                        <input type="text" asp-for="UserProfile.Firstname" class="form-control" disabled="disabled"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UserProfile.Lastname"></label>
+                        <input type="text" asp-for="UserProfile.Lastname" class="form-control" disabled="disabled"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UserProfile.Email"></label>
+                        <input type="text" asp-for="UserProfile.Email" class="form-control" disabled="disabled"/>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-org" role="tabpanel" aria-labelledby="nav-org-tab">
+                    @if (Model.UserProfile.OrganizationLinks?.Any() == true)
+                    {
+                         foreach (var orgLink in Model.UserProfile.OrganizationLinks)
+                         {
+                             @orgLink.Organization.Name
+                         }
+                    }
+                    else
+                    {
+                        <p>You a lone wolf!</p>
+                    }
+                </div>
+                <div class="tab-pane fade" id="nav-questions" role="tabpanel" aria-labelledby="nav-questions-tab">
+                    @if (Model.UserQuestions?.Any() == true)
+                    {
+                        foreach (var question in Model.UserQuestions)
+                        {
+                            <p><a asp-controller="Question" asp-action="Detail" asp-route-id="@question.Id">@question.Title</a></p>
+                        }
+                    }
+                    else
+                    {
+                        <p>You haven't asked any questions.</p>
+                        <p><a asp-controller="Question" asp-action="Ask">Ask a question</a></p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
