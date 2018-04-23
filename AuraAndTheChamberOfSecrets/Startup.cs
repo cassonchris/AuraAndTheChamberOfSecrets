@@ -89,6 +89,8 @@ namespace AuraAndTheChamberOfSecrets
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
+
             app.UseAuthentication();
 
             app.UseMvc(routes =>

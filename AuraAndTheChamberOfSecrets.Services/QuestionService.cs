@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AuraAndTheChamberOfSecrets.Models;
 using AuraAndTheChamberOfSecrets.Repo.Interface;
 using AuraAndTheChamberOfSecrets.Services.Interface;
+using Markdig;
 
 namespace AuraAndTheChamberOfSecrets.Services
 {
@@ -28,6 +29,9 @@ namespace AuraAndTheChamberOfSecrets.Services
 
         public async Task CreateQuestionAsync(Question question)
         {
+            // parse the question text to html
+            question.QuestionText = Markdown.ToHtml(question.QuestionText);
+
             await _questionRepo.AddAsync(question);
             await _questionRepo.SaveAsync();
         }
@@ -39,9 +43,14 @@ namespace AuraAndTheChamberOfSecrets.Services
 
         public async Task AddAnswerAsync(Answer answer, Guid questionId)
         {
+            // parse the answer text to html
+            answer.AnswerText = Markdown.ToHtml(answer.AnswerText);
+
+            // link the question and answer
             var question = GetQuestion(questionId);
             answer.Question = question;
             question.Answers.Add(answer);
+
             await _questionRepo.SaveAsync();
         }
     }

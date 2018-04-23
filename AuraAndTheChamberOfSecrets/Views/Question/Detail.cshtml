@@ -4,27 +4,38 @@
     ViewData["Title"] = "Question Detail";
 }
 
+@section Styles
+{
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+}
+
+@section Scripts
+{
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script src="~/js/markdown.js"></script>
+}
+
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
             <h5>@Model.Question.Title</h5>
-            <p>@Model.Question.QuestionText</p>
+            <div class="bg-light p-3">@Html.Raw(Model.Question.QuestionText)</div>
             <p>@Model.Question.User.Username</p>
         </div>
     </div>
-    <hr/>
+    <hr />
     <h4>Answers</h4>
     @foreach (var answer in Model.Question.Answers)
     {
         <div class="row">
-        <div class="col-sm-12">
-            <p>@answer.AnswerText</p>
-            <p>@answer.User.Username</p>
-        </div>
+            <div class="col-sm-12">
+                <div class="bg-light p-3">@Html.Raw(answer.AnswerText)</div>
+                <p>@answer.User.Username</p>
+            </div>
         </div>
     }
-    <hr/>
-    <div class="row">
+    <hr />
+    <div class="row mb-5">
         <div class="col-sm-12">
             <form asp-action="Detail" method="post" class="form">
                 <div class="form-group">
