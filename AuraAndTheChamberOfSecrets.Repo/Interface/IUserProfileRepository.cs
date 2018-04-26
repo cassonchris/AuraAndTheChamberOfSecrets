@@ -4,5 +4,6 @@ namespace AuraAndTheChamberOfSecrets.Repo.Interface
 {
     public interface IUserProfileRepository : IBaseRepository<UserProfile>
     {
+        UserProfile GetSingleByUsername(string username);
     }
 }
