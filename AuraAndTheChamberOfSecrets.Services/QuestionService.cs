@@ -1,30 +1,44 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AuraAndTheChamberOfSecrets.Models;
 using AuraAndTheChamberOfSecrets.Repo.Interface;
 using AuraAndTheChamberOfSecrets.Services.Interface;
 using Markdig;
+using Nest;
 
 namespace AuraAndTheChamberOfSecrets.Services
 {
     public class QuestionService : IQuestionService
     {
         private readonly IQuestionRepository _questionRepo;
+        private readonly IElasticClient _elasticClient;
 
-        public QuestionService(IQuestionRepository questionRepo)
+        public QuestionService(IQuestionRepository questionRepo, IElasticClient elasticClient)
         {
             _questionRepo = questionRepo;
+            _elasticClient = elasticClient;
         }
 
         /// <summary>
-        /// todo - add elastic search
         /// </summary>
         /// <param name="searchString"></param>
         /// <returns></returns>
-        public IQueryable<Question> SearchQuestions(string searchString)
+        public async Task<IEnumerable<Question>> SearchQuestionsAsync(string searchString)
         {
-            return _questionRepo.Query(q => q.QuestionText.Contains(searchString));
+            // search elasticsearch
+            var results = await _elasticClient.SearchAsync<Question>(s => s.MatchAll(m => m.Name(searchString)));
+            if (results.IsValid)
+            {
+                // return the results from elasticsearch
+                return results.Hits.Select(h => h.Source);
+            }
+            else
+            {
+                // fall back to search database directly
+                return _questionRepo.Query(q => q.QuestionText.Contains(searchString));
+            }
         }
 
         public async Task CreateQuestionAsync(Question question)
@@ -34,6 +48,12 @@ namespace AuraAndTheChamberOfSecrets.Services
 
             await _questionRepo.AddAsync(question);
             await _questionRepo.SaveAsync();
+
+            // index to elastic search
+            await _elasticClient.IndexAsync(question, i => 
+                i.Index<Question>()
+                    .Type("default")
+                    .Id(question.Id));
         }
 
         public Question GetQuestion(Guid id)
@@ -52,6 +72,12 @@ namespace AuraAndTheChamberOfSecrets.Services
             question.Answers.Add(answer);
 
             await _questionRepo.SaveAsync();
+
+            // update the elastic search index
+            await _elasticClient.IndexAsync(question, i =>
+                i.Index<Question>()
+                    .Type("default")
+                    .Id(question.Id));
         }
     }
 }

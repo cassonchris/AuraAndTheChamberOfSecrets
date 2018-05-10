@@ -28,14 +28,14 @@ namespace AuraAndTheChamberOfSecrets.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Search(SearchViewModel search)
+        public async Task<IActionResult> Search(SearchViewModel search)
         {
             if (!ModelState.IsValid)
             {
                 return View(search);
             }
 
-            search.SearchResults = _questionService.SearchQuestions(search.SearchString);
+            search.SearchResults = await _questionService.SearchQuestionsAsync(search.SearchString);
 
             return View(search);
         }

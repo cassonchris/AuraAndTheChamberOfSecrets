@@ -1,4 +1,5 @@
-﻿using AuraAndTheChamberOfSecrets.Services.Interface;
+﻿using System.Threading.Tasks;
+using AuraAndTheChamberOfSecrets.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,14 +16,14 @@ namespace AuraAndTheChamberOfSecrets.Controllers.Api
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Search(string searchString)
+        public async Task<IActionResult> Search(string searchString)
         {
             if (string.IsNullOrWhiteSpace(searchString))
             {
                 return BadRequest("Search string is empty");
             }
 
-            var questions = _questionService.SearchQuestions(searchString);
+            var questions = await _questionService.SearchQuestionsAsync(searchString);
             return Ok(questions);
         }
     }
