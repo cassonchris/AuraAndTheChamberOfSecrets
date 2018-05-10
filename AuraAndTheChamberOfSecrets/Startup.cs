@@ -78,7 +78,7 @@ namespace AuraAndTheChamberOfSecrets
             services.AddMvc(opt => { opt.Filters.Add(new AuthorizeFilter(authPolicy)); });
 
             services.AddAuraAndTheChamberOfSecretsEntityFrameworkRepositories();
-            services.AddAuraAndTheChamberOfSecretsServices();
+            services.AddAuraAndTheChamberOfSecretsServices(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
