@@ -28,7 +28,18 @@ namespace AuraAndTheChamberOfSecrets.Services
         public async Task<IEnumerable<Question>> SearchQuestionsAsync(string searchString)
         {
             // search elasticsearch
-            var results = await _elasticClient.SearchAsync<Question>(s => s.MatchAll(m => m.Name(searchString)));
+            var results = await _elasticClient.SearchAsync<Question>(search => 
+                    search.Query(query =>
+                        query.Bool(boool => 
+                            boool.Should(
+                                s => s.Match(m => m.Field(f => f.Title).Query(searchString).Boost(3)),
+                                s => s.Match(m => m.Field(f => f.QuestionText).Query(searchString)),
+                                s => s.Match(m => m.Field(new Field("answers.$values.answerText")).Query(searchString).Boost(.6)) // todo - how to strongly type this?
+                            )
+                        )
+                    )
+                );
+
             if (results.IsValid)
             {
                 // return the results from elasticsearch
