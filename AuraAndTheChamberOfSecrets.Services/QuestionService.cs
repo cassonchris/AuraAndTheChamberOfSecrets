@@ -10,6 +10,9 @@ using Nest;
 
 namespace AuraAndTheChamberOfSecrets.Services
 {
+    /// <summary>
+    /// todo - inject an ISearchProvider or something like that instead of having elasticsearch code directly in here
+    /// </summary>
     public class QuestionService : IQuestionService
     {
         private readonly IQuestionRepository _questionRepo;
@@ -34,7 +37,9 @@ namespace AuraAndTheChamberOfSecrets.Services
                             boool.Should(
                                 s => s.Match(m => m.Field(f => f.Title).Query(searchString).Boost(3)),
                                 s => s.Match(m => m.Field(f => f.QuestionText).Query(searchString)),
-                                s => s.Match(m => m.Field(new Field("answers.$values.answerText")).Query(searchString).Boost(.6)) // todo - how to strongly type this?
+                                // surprisingly this works
+                                // I don't really like how this gets put together because First() doesn't actually mean first, it's just used to get to AnswerText
+                                s => s.Match(m => m.Field(f => f.Answers.First().AnswerText).Query(searchString).Boost(.6))
                             )
                         )
                     )

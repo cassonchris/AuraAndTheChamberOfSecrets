@@ -25,6 +25,7 @@ namespace AuraAndTheChamberOfSecrets.AdminCli
             var configuration = configBuilder.Build();
 
             // build the service provider
+            // todo - use the service collection extensions from the services project
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddScoped<Program, Program>();
             serviceCollection.AddDbContext<AuraAndTheChamberOfSecretsDbContext>(options =>
@@ -34,7 +35,7 @@ namespace AuraAndTheChamberOfSecrets.AdminCli
             var elasticSettings = new ConnectionSettings(pool,
                 (builtin, settings) => new JsonNetSerializer(builtin, settings, () => new JsonSerializerSettings
                 {
-                    PreserveReferencesHandling = PreserveReferencesHandling.All
+                    PreserveReferencesHandling = PreserveReferencesHandling.Objects
                 }));
             elasticSettings.DefaultIndex("question");
             elasticSettings.DefaultTypeName("default");
@@ -94,7 +95,7 @@ namespace AuraAndTheChamberOfSecrets.AdminCli
             await _elasticClient.DeleteIndexAsync("question");
 
             // get all questions
-            var questions = _questionRepo.Query(q => true);
+            var questions = _questionRepo.Query(q => true).Include(q => q.Answers);
 
             // todo - use bulk index
             foreach (var question in questions)

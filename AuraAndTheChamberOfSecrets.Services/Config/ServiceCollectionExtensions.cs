@@ -20,7 +20,7 @@ namespace AuraAndTheChamberOfSecrets.Services.Config
             var elasticSettings = new ConnectionSettings(pool, 
                 (builtin, settings) => new JsonNetSerializer(builtin, settings, () => new JsonSerializerSettings
                 {
-                    PreserveReferencesHandling = PreserveReferencesHandling.All
+                    PreserveReferencesHandling = PreserveReferencesHandling.Objects
                 }));
             elasticSettings.DefaultIndex("question");
             elasticSettings.DefaultTypeName("default");
