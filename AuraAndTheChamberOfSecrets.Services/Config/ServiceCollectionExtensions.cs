@@ -11,6 +11,11 @@ namespace AuraAndTheChamberOfSecrets.Services.Config
 {
     public static class ServiceCollectionExtensions
     {
+        /// <summary>
+        /// Adds the services and elastic client
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="config"></param>
         public static void AddAuraAndTheChamberOfSecretsServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddScoped<IQuestionService, QuestionService>();

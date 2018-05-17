@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using AuraAndTheChamberOfSecrets.Models;
 using AuraAndTheChamberOfSecrets.Repo.Config;
-using AuraAndTheChamberOfSecrets.Repo.EntityFramework.Context;
 using AuraAndTheChamberOfSecrets.Repo.Interface;
 using AuraAndTheChamberOfSecrets.Services.Config;
 using Microsoft.EntityFrameworkCore;
@@ -23,12 +22,9 @@ namespace AuraAndTheChamberOfSecrets.AdminCli
             var configuration = configBuilder.Build();
 
             // build the service provider
-            // todo - use the service collection extensions from the services project
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddScoped<Program, Program>();
-            serviceCollection.AddDbContext<AuraAndTheChamberOfSecretsDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("AuraAndTheChamberOfSecretsConnection")));
-            serviceCollection.AddAuraAndTheChamberOfSecretsEntityFrameworkRepositories();
+            serviceCollection.AddAuraAndTheChamberOfSecretsEntityFrameworkRepositories(configuration);
             serviceCollection.AddAuraAndTheChamberOfSecretsServices(configuration);
             var serviceProvider = serviceCollection.BuildServiceProvider();
 

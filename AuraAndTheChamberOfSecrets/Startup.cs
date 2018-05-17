@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -33,9 +32,6 @@ namespace AuraAndTheChamberOfSecrets
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AuraAndTheChamberOfSecretsDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("AuraAndTheChamberOfSecretsConnection")));
-
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<AuraAndTheChamberOfSecretsDbContext>()
                 .AddDefaultTokenProviders();
@@ -77,7 +73,7 @@ namespace AuraAndTheChamberOfSecrets
 
             services.AddMvc(opt => { opt.Filters.Add(new AuthorizeFilter(authPolicy)); });
 
-            services.AddAuraAndTheChamberOfSecretsEntityFrameworkRepositories();
+            services.AddAuraAndTheChamberOfSecretsEntityFrameworkRepositories(Configuration);
             services.AddAuraAndTheChamberOfSecretsServices(Configuration);
         }
 
