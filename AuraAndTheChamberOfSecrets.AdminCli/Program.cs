@@ -4,13 +4,11 @@ using AuraAndTheChamberOfSecrets.Models;
 using AuraAndTheChamberOfSecrets.Repo.Config;
 using AuraAndTheChamberOfSecrets.Repo.EntityFramework.Context;
 using AuraAndTheChamberOfSecrets.Repo.Interface;
-using Elasticsearch.Net;
+using AuraAndTheChamberOfSecrets.Services.Config;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nest;
-using Nest.JsonNetSerializer;
-using Newtonsoft.Json;
 
 namespace AuraAndTheChamberOfSecrets.AdminCli
 {
@@ -31,15 +29,7 @@ namespace AuraAndTheChamberOfSecrets.AdminCli
             serviceCollection.AddDbContext<AuraAndTheChamberOfSecretsDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("AuraAndTheChamberOfSecretsConnection")));
             serviceCollection.AddAuraAndTheChamberOfSecretsEntityFrameworkRepositories();
-            var pool = new SingleNodeConnectionPool(new Uri(configuration.GetSection("ElasticSearch")["Uri"]));
-            var elasticSettings = new ConnectionSettings(pool,
-                (builtin, settings) => new JsonNetSerializer(builtin, settings, () => new JsonSerializerSettings
-                {
-                    PreserveReferencesHandling = PreserveReferencesHandling.Objects
-                }));
-            elasticSettings.DefaultIndex("question");
-            elasticSettings.DefaultTypeName("default");
-            serviceCollection.AddSingleton<IElasticClient>(new ElasticClient(elasticSettings));
+            serviceCollection.AddAuraAndTheChamberOfSecretsServices(configuration);
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
             // get the program and run the cli
