@@ -21,13 +21,6 @@ namespace AuraAndTheChamberOfSecrets.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Search()
-        {
-            return View(new SearchViewModel());
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> Search(SearchViewModel search)
         {
             if (!ModelState.IsValid)

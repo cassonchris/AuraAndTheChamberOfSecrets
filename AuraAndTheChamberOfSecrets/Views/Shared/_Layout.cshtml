@@ -32,7 +32,7 @@
                             <a class="nav-link" asp-controller="Question" asp-action="Ask">Ask Question</a>
                         </li>
                     </ul>
-                    <form asp-controller="Question" asp-action="Search" method="post" class="form form-inline mx-auto">
+                    <form asp-controller="Question" asp-action="Search" method="get" class="form form-inline mx-auto">
                         <div class="input-group">
                             <input type="text" name="SearchString" class="form-control" />
                             <div class="input-group-append">
@@ -56,7 +56,7 @@
             }
             else
             {
-                <form asp-controller="Question" asp-action="Search" method="post" class="form form-inline mx-auto">
+                <form asp-controller="Question" asp-action="Search" method="get" class="form form-inline mx-auto">
                     <div class="input-group">
                         <input type="text" name="SearchString" class="form-control" />
                         <div class="input-group-append">
