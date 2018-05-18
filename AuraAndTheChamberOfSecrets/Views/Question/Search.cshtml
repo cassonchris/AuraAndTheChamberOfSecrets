@@ -1,5 +1,7 @@
 ﻿@model AuraAndTheChamberOfSecrets.ViewModels.Question.SearchViewModel
 
+@using HtmlAgilityPack
+
 @{
     ViewData["Title"] = "Search Results";
 }
@@ -14,7 +16,18 @@
                     <h5>
                         <a asp-controller="Question" asp-action="Detail" asp-route-id="@searchResult.Id">@searchResult.Title</a>
                     </h5>
-                    <p>@searchResult.QuestionText</p>
+                    <p>
+                        @{
+                            var questionHtml = new HtmlDocument();
+                            questionHtml.LoadHtml(searchResult.QuestionText);
+                            var questionText = questionHtml.DocumentNode.InnerText;
+                            if (questionText.Length > 200)
+                            {
+                                questionText = $"{questionText.Substring(0, 200)} ...";
+                            }
+                        }
+                        @questionText
+                    </p>
                 }
             }
         </div>
